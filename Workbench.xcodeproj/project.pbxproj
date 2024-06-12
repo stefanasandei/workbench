@@ -31,6 +31,7 @@
 		399B4A0A2C18C8A600BD4A35 /* Workbench.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Workbench.entitlements; sourceTree = "<group>"; };
 		39FE16592C19EE27002E5825 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		39FE165A2C19F081002E5825 /* SimpleShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SimpleShader.metal; sourceTree = "<group>"; };
+		39FE165C2C19F3A8002E5825 /* Tweaks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tweaks.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +51,7 @@
 				39FE16582C19EE14002E5825 /* Shaders */,
 				39095EC92C198A2F00BEA432 /* AAPLRenderer.h */,
 				39095ECA2C198A2F00BEA432 /* AAPLRenderer.m */,
+				39FE165C2C19F3A8002E5825 /* Tweaks.h */,
 				39095EC82C198A2E00BEA432 /* Workbench-Bridging-Header.h */,
 			);
 			path = Renderer;

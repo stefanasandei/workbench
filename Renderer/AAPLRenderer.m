@@ -11,6 +11,7 @@
 #import "AAPLRenderer.h"
 
 #import "Shaders/ShaderTypes.h"
+#import "Tweaks.h"
 
 @implementation AAPLRenderer
 {
@@ -21,6 +22,7 @@
     id<MTLCommandQueue> _commandQueue;
     
     vector_uint2 _viewportSize;
+    Tweaks _tweaks;
 }
 
 - (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)mtkView
@@ -58,10 +60,10 @@
 }
 
 - (void)drawInMTKView:(nonnull MTKView *)view {
-    static const Vertex vertices[] = {
+    Vertex vertices[] = {
         { {500, -500}, {1, 0, 0, 1}},
         { {-500, -500}, {0, 1, 0, 1}},
-        { {0, 500}, {0, 0, 1, 1}},
+        { {0, 500}, {0, 0, _tweaks.blue, 1}},
     };
     
     id<MTLCommandBuffer> commandBuffer = [_commandQueue commandBuffer];
@@ -89,6 +91,10 @@
 - (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size { 
     _viewportSize.x = size.width;
     _viewportSize.y = size.height;
+}
+
+- (void)setTweaks:(Tweaks)tweaks {
+    _tweaks = tweaks;
 }
 
 @end

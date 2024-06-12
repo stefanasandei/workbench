@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MetalKit
+import Combine
 
 struct EditorView: View {
     @State private var metalView = MTKView()
@@ -20,10 +21,10 @@ struct EditorView: View {
                     renderer = AAPLRenderer(metalKitView: metalView)
                 }
                 
-                PropertiesView()
+                PropertiesView(renderer: $renderer)
             }.ignoresSafeArea(.all, edges: .top)
         }
-        .background(BlurView(material: .sidebar, blendingMode: .behindWindow))
+        .background(BlurView(material: .sidebar, blendingMode: .withinWindow))
         .frame(minWidth: 720, minHeight: 480)
     }
 }
@@ -47,17 +48,20 @@ struct EditorPanelView<Content: View>: View {
     }
 }
 
-
 struct PropertiesView: View {
-    @State private var settings: Float = 0.0
+    @Binding public var renderer: AAPLRenderer?;
+    
+    @State private var settings = Tweaks();
     
     var body: some View {
         EditorPanelView {
-            Section("Some value") {
+            Section("Blue value: \(settings.blue)f") {
                 Slider(
-                    value: $settings,
-                    in: 10...180
-                )
+                    value: $settings.blue,
+                    in: 0...1
+                ).onChange(of: settings.blue, {
+                    renderer?.setTweaks(settings);
+                })
             }
             .font(.headline)
         }
