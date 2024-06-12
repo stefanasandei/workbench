@@ -10,6 +10,7 @@ import MetalKit
 
 struct EditorView: View {
     @State private var metalView = MTKView()
+    @State private var renderer: AAPLRenderer?
 
     var body: some View {
         ZStack {
@@ -19,6 +20,9 @@ struct EditorView: View {
                 
                 VStack {
                     MetalViewRepresentable(metalView: $metalView)
+                    .onAppear {
+                        renderer = AAPLRenderer(metalKitView: metalView)
+                    }
                 }
             }.ignoresSafeArea(.all, edges: .top)
         }
@@ -35,9 +39,9 @@ struct PropertiesView: View {
                 .font(.title)
                 .fontWeight(.bold)
             
-            Section("Camera") {
+            Section("Graphics") {
                 HStack {
-                    Text("FOV")
+                    Text("Some value")
                     Slider(
                         value: $settings,
                         in: 10...180
