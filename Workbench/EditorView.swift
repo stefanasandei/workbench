@@ -24,7 +24,7 @@ struct EditorView: View {
                 PropertiesView(renderer: $renderer)
             }.ignoresSafeArea(.all, edges: .top)
         }
-        .background(BlurView(material: .sidebar, blendingMode: .withinWindow))
+        .background(BlurView(material: .sidebar, blendingMode: .withinWindow§))
         .frame(minWidth: 720, minHeight: 480)
     }
 }
