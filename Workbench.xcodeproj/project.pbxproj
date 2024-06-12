@@ -14,6 +14,7 @@
 		399B4A022C18C8A500BD4A35 /* WorkbenchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399B4A012C18C8A500BD4A35 /* WorkbenchApp.swift */; };
 		399B4A042C18C8A500BD4A35 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399B4A032C18C8A500BD4A35 /* ContentView.swift */; };
 		399B4A062C18C8A600BD4A35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 399B4A052C18C8A600BD4A35 /* Assets.xcassets */; };
+		39FE165B2C19F1D0002E5825 /* SimpleShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 39FE165A2C19F081002E5825 /* SimpleShader.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,8 @@
 		399B4A032C18C8A500BD4A35 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		399B4A052C18C8A600BD4A35 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		399B4A0A2C18C8A600BD4A35 /* Workbench.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Workbench.entitlements; sourceTree = "<group>"; };
+		39FE16592C19EE27002E5825 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
+		39FE165A2C19F081002E5825 /* SimpleShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SimpleShader.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +47,7 @@
 		39095EC62C1989B300BEA432 /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				39FE16582C19EE14002E5825 /* Shaders */,
 				39095EC92C198A2F00BEA432 /* AAPLRenderer.h */,
 				39095ECA2C198A2F00BEA432 /* AAPLRenderer.m */,
 				39095EC82C198A2E00BEA432 /* Workbench-Bridging-Header.h */,
@@ -88,6 +92,15 @@
 				399B4A0A2C18C8A600BD4A35 /* Workbench.entitlements */,
 			);
 			path = Workbench;
+			sourceTree = "<group>";
+		};
+		39FE16582C19EE14002E5825 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				39FE16592C19EE27002E5825 /* ShaderTypes.h */,
+				39FE165A2C19F081002E5825 /* SimpleShader.metal */,
+			);
+			path = Shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +176,7 @@
 				399B4A042C18C8A500BD4A35 /* ContentView.swift in Sources */,
 				39095EC32C19875600BEA432 /* EditorView.swift in Sources */,
 				39095ECB2C198A2F00BEA432 /* AAPLRenderer.m in Sources */,
+				39FE165B2C19F1D0002E5825 /* SimpleShader.metal in Sources */,
 				39095EC52C1988FA00BEA432 /* MetalView.swift in Sources */,
 				399B4A022C18C8A500BD4A35 /* WorkbenchApp.swift in Sources */,
 				39095EC12C19872000BEA432 /* BlurView.swift in Sources */,

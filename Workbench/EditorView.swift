@@ -53,14 +53,11 @@ struct PropertiesView: View {
     
     var body: some View {
         EditorPanelView {
-            Section("Graphics") {
-                HStack {
-                    Text("Some value")
-                    Slider(
-                        value: $settings,
-                        in: 10...180
-                    )
-                }
+            Section("Some value") {
+                Slider(
+                    value: $settings,
+                    in: 10...180
+                )
             }
             .font(.headline)
         }
