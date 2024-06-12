@@ -14,31 +14,45 @@ struct EditorView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
-            HStack {
-                PropertiesView()
-                
-                VStack {
-                    MetalViewRepresentable(metalView: $metalView)
-                    .onAppear {
-                        renderer = AAPLRenderer(metalKitView: metalView)
-                    }
+            HSplitView {
+                MetalViewRepresentable(metalView: $metalView)
+                .onAppear {
+                    renderer = AAPLRenderer(metalKitView: metalView)
                 }
+                
+                PropertiesView()
             }.ignoresSafeArea(.all, edges: .top)
         }
+        .background(BlurView(material: .sidebar, blendingMode: .behindWindow))
         .frame(minWidth: 720, minHeight: 480)
     }
 }
+
+struct EditorPanelView<Content: View>: View {
+    public var content: Content
+    
+    public init(@ViewBuilder content: @escaping () -> Content) {
+        self.content = content()
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            content
+            
+            Spacer()
+        }
+        .frame(maxWidth: 250)
+        .padding(.top, 20)
+        .padding(.horizontal, 20)
+    }
+}
+
 
 struct PropertiesView: View {
     @State private var settings: Float = 0.0
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("Settings")
-                .font(.title)
-                .fontWeight(.bold)
-            
+        EditorPanelView {
             Section("Graphics") {
                 HStack {
                     Text("Some value")
@@ -48,12 +62,7 @@ struct PropertiesView: View {
                     )
                 }
             }
-            
-            Spacer()
+            .font(.headline)
         }
-        .frame(maxWidth: 250)
-        .padding(.top, 40)
-        .padding(.horizontal, 20)
-        .background(BlurView(material: .sidebar, blendingMode: .behindWindow))
     }
 }
