@@ -24,7 +24,7 @@ struct EditorView: View {
                 PropertiesView(renderer: $renderer)
             }.ignoresSafeArea(.all, edges: .top)
         }
-        .background(BlurView(material: .sidebar, blendingMode: .withinWindow§))
+        .background(BlurView(material: .sidebar, blendingMode: .behindWindow))
         .frame(minWidth: 720, minHeight: 480)
     }
 }
@@ -60,6 +60,16 @@ struct PropertiesView: View {
                     value: $settings.blue,
                     in: 0...1
                 ).onChange(of: settings.blue, {
+                    renderer?.setTweaks(settings);
+                })
+            }
+            .font(.headline)
+            
+            Section("Z value: \(settings.z)f") {
+                Slider(
+                    value: $settings.z,
+                    in: 0...10
+                ).onChange(of: settings.z, {
                     renderer?.setTweaks(settings);
                 })
             }

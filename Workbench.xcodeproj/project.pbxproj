@@ -15,6 +15,7 @@
 		399B4A042C18C8A500BD4A35 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399B4A032C18C8A500BD4A35 /* ContentView.swift */; };
 		399B4A062C18C8A600BD4A35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 399B4A052C18C8A600BD4A35 /* Assets.xcassets */; };
 		39FE165B2C19F1D0002E5825 /* SimpleShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 39FE165A2C19F081002E5825 /* SimpleShader.metal */; };
+		39FE165F2C231643002E5825 /* MatrixUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 39FE165E2C2314AF002E5825 /* MatrixUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		39FE16592C19EE27002E5825 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		39FE165A2C19F081002E5825 /* SimpleShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SimpleShader.metal; sourceTree = "<group>"; };
 		39FE165C2C19F3A8002E5825 /* Tweaks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tweaks.h; sourceTree = "<group>"; };
+		39FE165D2C2314AF002E5825 /* MatrixUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatrixUtils.h; sourceTree = "<group>"; };
+		39FE165E2C2314AF002E5825 /* MatrixUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatrixUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +56,8 @@
 				39095ECA2C198A2F00BEA432 /* AAPLRenderer.m */,
 				39FE165C2C19F3A8002E5825 /* Tweaks.h */,
 				39095EC82C198A2E00BEA432 /* Workbench-Bridging-Header.h */,
+				39FE165D2C2314AF002E5825 /* MatrixUtils.h */,
+				39FE165E2C2314AF002E5825 /* MatrixUtils.m */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 				39FE165B2C19F1D0002E5825 /* SimpleShader.metal in Sources */,
 				39095EC52C1988FA00BEA432 /* MetalView.swift in Sources */,
 				399B4A022C18C8A500BD4A35 /* WorkbenchApp.swift in Sources */,
+				39FE165F2C231643002E5825 /* MatrixUtils.m in Sources */,
 				39095EC12C19872000BEA432 /* BlurView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

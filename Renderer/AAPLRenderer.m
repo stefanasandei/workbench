@@ -11,7 +11,16 @@
 #import "AAPLRenderer.h"
 
 #import "Shaders/ShaderTypes.h"
+#import "MatrixUtils.h"
 #import "Tweaks.h"
+
+#define LEN(a) (sizeof(a) / sizeof(a[0]))
+
+@interface AAPLRenderer()
+
+- (void)setupSceneData;
+
+@end
 
 @implementation AAPLRenderer
 {
@@ -21,9 +30,11 @@
     
     id<MTLCommandQueue> _commandQueue;
     
-    vector_uint2 _viewportSize;
+    SceneData _sceneData;
     Tweaks _tweaks;
 }
+
+#pragma mark Public methods
 
 - (nonnull instancetype)initWithMetalKitView:(nonnull MTKView *)mtkView
 {
@@ -49,8 +60,10 @@
 
     _commandQueue = [_device newCommandQueue];
     
-    _viewportSize.x = mtkView.drawableSize.width;
-    _viewportSize.y = mtkView.drawableSize.height;
+    _sceneData.viewportSize.x = mtkView.drawableSize.width;
+    _sceneData.viewportSize.y = mtkView.drawableSize.height;
+    
+    [self setupSceneData];
     
     mtkView.device = _device;
     mtkView.framebufferOnly = false;
@@ -61,9 +74,13 @@
 
 - (void)drawInMTKView:(nonnull MTKView *)view {
     Vertex vertices[] = {
-        { {500, -500}, {1, 0, 0, 1}},
-        { {-500, -500}, {0, 1, 0, 1}},
-        { {0, 500}, {0, 0, _tweaks.blue, 1}},
+        { {0.5, 0.5, 1+_tweaks.z}, {1, 0, 0, 1}},
+        { {0.5, -0.5, 1+_tweaks.z}, {0, 1, 0, 1}},
+        { {-0.5, 0.5, 1+_tweaks.z}, {0, 0, _tweaks.blue, 1}},
+        
+        { {0.5, -0.5, 1+_tweaks.z}, {1, 0, 0, 1}},
+        { {-0.5, -0.5, 1+_tweaks.z}, {0, 1, 0, 1}},
+        { {-0.5, 0.5, 1+_tweaks.z}, {0, 0, _tweaks.blue, 1}},
     };
     
     id<MTLCommandBuffer> commandBuffer = [_commandQueue commandBuffer];
@@ -75,12 +92,12 @@
     
     id<MTLRenderCommandEncoder> renderEncoder = [commandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
 
-    [renderEncoder setViewport:(MTLViewport){0.0, 0.0, _viewportSize.x, _viewportSize.y, 0.0, 1.0}];
+    [renderEncoder setViewport:(MTLViewport){0.0, 0.0, _sceneData.viewportSize.x, _sceneData.viewportSize.y, 0.0, 1.0}];
     [renderEncoder setRenderPipelineState:_pipelineState];
     [renderEncoder setVertexBytes:vertices length:sizeof(vertices) atIndex:VertexInputIndexVertices];
-    [renderEncoder setVertexBytes:&_viewportSize length:sizeof(_viewportSize) atIndex:VertexInputIndexViewportSize];
+    [renderEncoder setVertexBytes:&_sceneData length:sizeof(_sceneData) atIndex:VertexInputIndexSceneData];
     
-    [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:3];
+    [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:LEN(vertices)];
     
     [renderEncoder endEncoding];
 
@@ -89,12 +106,27 @@
 }
 
 - (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size { 
-    _viewportSize.x = size.width;
-    _viewportSize.y = size.height;
+    _sceneData.viewportSize.x = size.width;
+    _sceneData.viewportSize.y = size.height;
+    
+    [self setupSceneData];
 }
 
 - (void)setTweaks:(Tweaks)tweaks {
     _tweaks = tweaks;
 }
+
+#pragma endmark
+
+#pragma mark Private methods
+
+- (void)setupSceneData {
+    _sceneData.view = matrix_identity_float4x4;
+    
+    float aspect = (float)_sceneData.viewportSize.x / (float)_sceneData.viewportSize.y;
+    _sceneData.projection = [MatrixUtils perspective:45.0f :aspect :0.1f :1000.0f];
+}
+
+#pragma endmark
 
 @end

@@ -10,6 +10,7 @@
 
 typedef struct {
     float blue;
+    float z;
 } Tweaks;
 
 #endif /* Tweaks_h */
