@@ -38,6 +38,7 @@
 		39FE165E2C2314AF002E5825 /* MatrixUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatrixUtils.m; sourceTree = "<group>"; };
 		39FE16612C232BE1002E5825 /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
 		39FE16622C232BE1002E5825 /* Mesh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mesh.m; sourceTree = "<group>"; };
+		39FE16662C2334DE002E5825 /* screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +120,7 @@
 		39FE16602C231D4C002E5825 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				39FE16662C2334DE002E5825 /* screenshot.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
