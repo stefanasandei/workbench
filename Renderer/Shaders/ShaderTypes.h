@@ -16,11 +16,6 @@ typedef enum {
 } VertexInputIndex;
 
 typedef struct {
-    vector_float3 position;
-    vector_float4 color;
-} Vertex;
-
-typedef struct {
     vector_uint2 viewportSize;
     
     matrix_float4x4 view;

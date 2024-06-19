@@ -11,8 +11,10 @@
 #import "AAPLRenderer.h"
 
 #import "Shaders/ShaderTypes.h"
+
 #import "MatrixUtils.h"
 #import "Tweaks.h"
+#import "Mesh.h"
 
 #define LEN(a) (sizeof(a) / sizeof(a[0]))
 
@@ -32,6 +34,7 @@
     
     SceneData _sceneData;
     Tweaks _tweaks;
+    Mesh* _mesh;
 }
 
 #pragma mark Public methods
@@ -44,6 +47,8 @@
     NSError *error;
     
     _device = MTLCreateSystemDefaultDevice();
+    
+    _mesh = [[Mesh alloc] initWithDevice:_device];
 
     id<MTLLibrary> defaultLibrary = [_device newDefaultLibrary];
     
@@ -54,6 +59,7 @@
     pipelineStateDescriptor.vertexFunction = vertexFunction;
     pipelineStateDescriptor.fragmentFunction = fragmentFunction;
     pipelineStateDescriptor.colorAttachments[0].pixelFormat = mtkView.colorPixelFormat;
+    pipelineStateDescriptor.vertexDescriptor = _mesh.getVertexDescriptor;
     
     _pipelineState = [_device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&error];
     NSAssert(_pipelineState, @"Failed to create the pipeline state: %@.", error);
@@ -73,16 +79,6 @@
 }
 
 - (void)drawInMTKView:(nonnull MTKView *)view {
-    Vertex vertices[] = {
-        { {0.5, 0.5, 1+_tweaks.z}, {1, 0, 0, 1}},
-        { {0.5, -0.5, 1+_tweaks.z}, {0, 1, 0, 1}},
-        { {-0.5, 0.5, 1+_tweaks.z}, {0, 0, _tweaks.blue, 1}},
-        
-        { {0.5, -0.5, 1+_tweaks.z}, {1, 0, 0, 1}},
-        { {-0.5, -0.5, 1+_tweaks.z}, {0, 1, 0, 1}},
-        { {-0.5, 0.5, 1+_tweaks.z}, {0, 0, _tweaks.blue, 1}},
-    };
-    
     id<MTLCommandBuffer> commandBuffer = [_commandQueue commandBuffer];
 
     MTLRenderPassDescriptor *renderPassDescriptor = view.currentRenderPassDescriptor;
@@ -92,12 +88,22 @@
     
     id<MTLRenderCommandEncoder> renderEncoder = [commandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
 
+    MTKMesh* mesh = _mesh.getMtkMesh;
+    
+    for(int i=0; i<mesh.vertexBuffers.count; i++) {
+        [renderEncoder setVertexBuffer:mesh.vertexBuffers[i].buffer
+                               offset:mesh.vertexBuffers[i].offset
+                              atIndex:i];
+    }
+    
     [renderEncoder setViewport:(MTLViewport){0.0, 0.0, _sceneData.viewportSize.x, _sceneData.viewportSize.y, 0.0, 1.0}];
     [renderEncoder setRenderPipelineState:_pipelineState];
-    [renderEncoder setVertexBytes:vertices length:sizeof(vertices) atIndex:VertexInputIndexVertices];
     [renderEncoder setVertexBytes:&_sceneData length:sizeof(_sceneData) atIndex:VertexInputIndexSceneData];
     
-    [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:LEN(vertices)];
+    for(int i=0; i<mesh.submeshes.count; i++) {
+        MTKMeshBuffer* indexBuffer = mesh.submeshes[i].indexBuffer;
+        [renderEncoder drawIndexedPrimitives:mesh.submeshes[i].primitiveType indexCount:mesh.submeshes[i].indexCount indexType:mesh.submeshes[i].indexType indexBuffer:indexBuffer.buffer indexBufferOffset:indexBuffer.offset];
+    }
     
     [renderEncoder endEncoding];
 
