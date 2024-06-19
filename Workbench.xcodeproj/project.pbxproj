@@ -78,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				39095EC62C1989B300BEA432 /* Renderer */,
+				39FE16602C231D4C002E5825 /* Resources */,
 				399B4A002C18C8A500BD4A35 /* Workbench */,
 				399B49FF2C18C8A500BD4A35 /* Products */,
 			);
@@ -108,6 +109,13 @@
 				39FE165A2C19F081002E5825 /* SimpleShader.metal */,
 			);
 			path = Shaders;
+			sourceTree = "<group>";
+		};
+		39FE16602C231D4C002E5825 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
